@@ -1,13 +1,13 @@
 {
   "name": "@mob-on/react-open-iconic-svg",
-  "version": "1.0.0",
-  "description": "Open iconic React version",
+  "version": "4.0.0",
+  "description": "Open iconic React version, with improved accessibility",
   "scripts": {
     "transpile": "babel dist --out-dir ./dist",
     "transpileIndex": "babel index.js --out-dir .",
     "build": "gulp",
     "prepublish": "make build",
-    "pub": "np --yolo"
+    "pub": "yarn publish --access public"
   },
   "main": "index.js",
   "author": "vaeum",
@@ -20,6 +20,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mob-on/react-open-iconic-svg.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "bugs": {
     "url": "https://github.com/mob-on/react-open-iconic-svg/issues"
