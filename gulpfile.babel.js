@@ -1,8 +1,8 @@
+import { headerCase, lowerCase, pascalCase, sentenceCase } from "change-case";
 import gulp from "gulp";
-import path from "path";
 import filenames from "gulp-filenames";
 import gulpLoadPlugins from "gulp-load-plugins";
-import { lowerCase, headerCase, pascalCase } from "change-case";
+import path from "path";
 
 const $ = gulpLoadPlugins({});
 
@@ -46,15 +46,15 @@ gulp.task("svg", () =>
 
     .pipe(
       $.insert.transform((content, file) => {
-        const name = pascalCase(
-          path.basename(file.relative, path.extname(file.relative))
-        );
+        const filename = path.basename(file.relative, path.extname(file.relative));
+        const name = pascalCase(filename);
+        const alt = sentenceCase(filename)
 
         fileList = filenames.get("svg");
 
         return `
-          import React from 'react';
-          export default function ${name}${PREFIX}(props) {
+          import React from "react";
+          export default function ${name}${PREFIX}({ alt = "${alt}", ...props }) {
             return (
               ${content}
             );
@@ -89,6 +89,7 @@ gulp.task("replace", () =>
         .pipe($.replace(/xlink:href=".+?"/g, ``))
         .pipe($.replace("fill-rule=", "fillRule="))
         .pipe($.replace("fill-opacity=", "fillOpacity="))
+        .pipe($.replace(/<svg([^>]*?)>/, '<svg $1>\n\t{alt && <title>{alt}</title>}'))
         .pipe($.prettier())
         .pipe(gulp.dest(DIST_FOLDER))
         .pipe(gulp.dest(LIB_FOLDER));

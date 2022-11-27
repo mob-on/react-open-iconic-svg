@@ -3,7 +3,7 @@ default:
 clean:
 	rm -rf lib
 	rm -rf dist
-	rm index.js
+	rm -f index.js
 
 build:
 	make clean
