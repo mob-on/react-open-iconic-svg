@@ -5,8 +5,8 @@
   "scripts": {
     "build": "make build",
     "pub": "yarn build && yarn pubNpm && yarn pubGithub",
-    "pubNpm": "yarn publish --access public --@mob-on:registry=https://registry.npmjs.org",
-    "pubGithub": "yarn publish --@mob-on:registry=https://npm.pkg.github.com"
+    "pubNpm": "npm publish --@mob-on:registry=https://registry.npmjs.org --access public",
+    "pubGithub": "npm publish --@mob-on:registry=https://npm.pkg.github.com"
   },
   "author": "vaeum",
   "license": "MIT",
