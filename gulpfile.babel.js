@@ -9,7 +9,6 @@ const $ = gulpLoadPlugins({});
 const PREFIX = "Icon";
 const CLASSNAME = "open-iconic";
 const DIST_FOLDER = "dist";
-const LIB_FOLDER = "lib";
 const SRC_FOLDER = "node_modules/open-iconic/svg";
 let fileList = [];
 function cap(string) {
@@ -54,7 +53,7 @@ gulp.task("svg", () =>
 
         return `
           import React from "react";
-          export default function ${name}${PREFIX}({ alt = "${alt}", ...props }) {
+          export default function ${PREFIX}${name}({ alt = "${alt}", ...props }) {
             return (
               ${content}
             );
@@ -64,25 +63,25 @@ gulp.task("svg", () =>
     )
     .pipe(
       $.rename(file => {
-        file.basename = `${pascalCase(file.basename)}${PREFIX}`;
-        file.extname = ".js";
+        file.basename = `${PREFIX}${pascalCase(file.basename)}`;
+        file.extname = ".jsx";
       })
     )
     .pipe(gulp.dest(DIST_FOLDER))
 );
 
 gulp.task("replace", () =>
-  gulp.src(`${DIST_FOLDER}/*.js`).pipe(
+  gulp.src(`${DIST_FOLDER}/*.jsx`).pipe(
     $.tap(file => {
       const fileName = path.basename(file.path);
-      const className = lowerCase(headerCase(fileName.replace(".js", "")));
+      const className = lowerCase(headerCase(fileName.replace(/^Icon/, "").replace(".jsx", ""))) + "-icon";
 
       return gulp
         .src(`${DIST_FOLDER}/${fileName}`)
         .pipe(
           $.replace(
             "classNameString",
-            `{...props} className={\`${CLASSNAME} ${CLASSNAME}-${className} \${props.className\}\`}`
+            `{...props} className={\`${CLASSNAME} ${CLASSNAME}-${className} \${props.className || ""\}\`}`
           )
         )
         .pipe($.replace(/xmlns:xlink=".+?"/g, ``))
@@ -92,7 +91,6 @@ gulp.task("replace", () =>
         .pipe($.replace(/<svg([^>]*?)>/, '<svg $1>\n\t{alt && <title>{alt}</title>}'))
         .pipe($.prettier())
         .pipe(gulp.dest(DIST_FOLDER))
-        .pipe(gulp.dest(LIB_FOLDER));
     })
   )
 );
@@ -106,14 +104,14 @@ gulp.task("generateIndex", () =>
 
         fileList.map(e => {
           let fileName = pascalCase(cap(e.replace(/\.svg$/gm, "")));
-          text += `import ${fileName}${PREFIX} from './dist/${fileName}${PREFIX}';\n`;
+          text += `import ${PREFIX}${fileName} from './dist/${PREFIX}${fileName}';\n`;
         });
 
         let footer = "export {\n";
 
         fileList.map(e => {
           let fileName = pascalCase(cap(e.replace(/\.svg$/gm, "")));
-          footer += `    ${fileName}${PREFIX},\n`;
+          footer += `    ${PREFIX}${fileName},\n`;
         });
 
         return text + "\n" + footer + "};";

@@ -13,11 +13,7 @@ yarn add --dev @mob-on/react-open-iconic-svg
 Import each one of the icons as React components, example:
 
 ```
-import { AccountLoginIcon } from '@mob-on/react-open-iconic-svg';
+import { IconAccountLogin } from '@mob-on/react-open-iconic-svg';
 
-<AccountLoginIcon />
+<IconAccountLogin />
 ```
-
-### Publishing library
-
-Run `yarn pub`
