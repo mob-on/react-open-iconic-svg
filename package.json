@@ -7,7 +7,9 @@
     "transpileIndex": "babel index.js --out-dir .",
     "build": "gulp",
     "prepublish": "make build",
-    "pub": "yarn publish --access public"
+    "pub": "yarn pubNpm && yarn pubGithub",
+    "pubNpm": "yarn publish --access public --registry=https://registry.npmjs.org",
+    "pubGithub": "yarn publish --@mob-on:registry=https://npm.pkg.github.com"
   },
   "main": "index.js",
   "author": "vaeum",
@@ -20,9 +22,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mob-on/react-open-iconic-svg.git"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
   },
   "bugs": {
     "url": "https://github.com/mob-on/react-open-iconic-svg/issues"
