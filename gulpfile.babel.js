@@ -53,7 +53,7 @@ gulp.task("svg", () =>
 
         return `
           import React from "react";
-          export default function ${PREFIX}${name}({ alt = "${alt}", ...props }) {
+          export const ${PREFIX}${name} = ({ alt = "${alt}", ...props }) => {
             return (
               ${content}
             );
@@ -64,17 +64,17 @@ gulp.task("svg", () =>
     .pipe(
       $.rename(file => {
         file.basename = `${PREFIX}${pascalCase(file.basename)}`;
-        file.extname = ".jsx";
+        file.extname = ".js";
       })
     )
     .pipe(gulp.dest(DIST_FOLDER))
 );
 
 gulp.task("replace", () =>
-  gulp.src(`${DIST_FOLDER}/*.jsx`).pipe(
+  gulp.src(`${DIST_FOLDER}/*.js`).pipe(
     $.tap(file => {
       const fileName = path.basename(file.path);
-      const className = lowerCase(headerCase(fileName.replace(/^Icon/, "").replace(".jsx", ""))) + "-icon";
+      const className = lowerCase(headerCase(fileName.replace(/^Icon/, "").replace(".js", ""))) + "-icon";
 
       return gulp
         .src(`${DIST_FOLDER}/${fileName}`)
@@ -104,7 +104,7 @@ gulp.task("generateIndex", () =>
 
         fileList.map(e => {
           let fileName = pascalCase(cap(e.replace(/\.svg$/gm, "")));
-          text += `export * from './dist/${PREFIX}${fileName}';\n`;
+          text += `export { ${PREFIX}${fileName} } from './dist/${PREFIX}${fileName}';\n`;
         });
 
         return text;
