@@ -104,17 +104,10 @@ gulp.task("generateIndex", () =>
 
         fileList.map(e => {
           let fileName = pascalCase(cap(e.replace(/\.svg$/gm, "")));
-          text += `import ${PREFIX}${fileName} from './dist/${PREFIX}${fileName}';\n`;
+          text += `export * from './dist/${PREFIX}${fileName}';\n`;
         });
 
-        let footer = "export {\n";
-
-        fileList.map(e => {
-          let fileName = pascalCase(cap(e.replace(/\.svg$/gm, "")));
-          footer += `    ${PREFIX}${fileName},\n`;
-        });
-
-        return text + "\n" + footer + "};";
+        return text;
       })
     )
     .pipe(gulp.dest("./"))

@@ -1,6 +1,5 @@
 node_modules/
 dist/
-lib/
 index.js
 npm-debug.log
 yarn-error.log

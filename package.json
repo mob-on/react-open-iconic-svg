@@ -3,15 +3,11 @@
   "version": "3.1.0",
   "description": "Open iconic React version, with improved accessibility",
   "scripts": {
-    "transpile": "babel dist --out-dir ./dist",
-    "transpileIndex": "babel index.js --out-dir .",
-    "build": "gulp",
-    "prepublish": "make build",
-    "pub": "yarn pubNpm && yarn pubGithub",
-    "pubNpm": "yarn publish --access public --registry=https://registry.npmjs.org",
+    "build": "make build",
+    "pub": "yarn build && yarn pubNpm && yarn pubGithub",
+    "pubNpm": "yarn publish --access public --@mob-on:registry=https://registry.npmjs.org",
     "pubGithub": "yarn publish --@mob-on:registry=https://npm.pkg.github.com"
   },
-  "main": "index.js",
   "author": "vaeum",
   "license": "MIT",
   "keywords": [
