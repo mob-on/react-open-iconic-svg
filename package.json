@@ -1,6 +1,6 @@
 {
   "name": "@mob-on/react-open-iconic-svg",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "Open iconic React version, with improved accessibility",
   "scripts": {
     "build": "make build",
